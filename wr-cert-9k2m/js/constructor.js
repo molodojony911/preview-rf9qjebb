@@ -11,6 +11,7 @@
   };
   let completed = false, wheelTimer, wheelSyncUntil = 0, generation = 0;
   $('templates').innerHTML = Object.values(W.COVERS).map(c => `<button class="opt cover" data-cover="${c.id}" aria-label="${c.label}"><img src="${c.src}" alt="Готовый дизайн White Rabbit: ${c.label}"><span>${c.label}</span></button>`).join('');
+  $('styles').innerHTML = Object.values(W.STYLES).map(st => `<button type="button" class="opt style-opt" data-style="${st.id}"><i class="style-sw" data-sw="${st.id}" aria-hidden="true"></i><b>${st.label}</b><span>${st.hint}</span></button>`).join('');
   $('ai-tags').innerHTML = Object.entries(tags).map(([id,label])=>`<button class="chip" data-ai="${id}">${label}</button>`).join('');
   $('greeting-tags').innerHTML = Object.keys(greetings).map(label=>`<button class="tpl" data-greeting="${label}">${label}</button>`).join('');
   $('amount-wheel').innerHTML = Array.from({length:298},(_,i)=>{const n=(i+3)*1000;return `<button class="wheel-option" role="option" data-wheel="${n}" tabindex="-1">${n.toLocaleString('ru-RU')}</button>`}).join('');
@@ -41,7 +42,7 @@
   }
   function render() {
     $('cert-preview').innerHTML=W.renderCertHTML(state);
-    [['[data-cover]','data-cover',state.cover],['[data-color]','data-color',state.color],['[data-shape].opt','data-shape',state.shape],['[data-amount]','data-amount',state.amount],['[data-channel]','data-channel',state.channel],['[data-timing]','data-timing',state.timing],['[data-font]','data-font',state.msgFont],['[data-ai]','data-ai',state.cover==='ai'?state.aiDesign:'']].forEach(a=>selected(...a));
+    [['[data-cover]','data-cover',state.cover],['[data-color]','data-color',state.color],['.style-opt','data-style',state.style],['[data-shape].opt','data-shape',state.shape],['[data-amount]','data-amount',state.amount],['[data-channel]','data-channel',state.channel],['[data-timing]','data-timing',state.timing],['[data-font]','data-font',state.msgFont],['[data-ai]','data-ai',state.cover==='ai'?state.aiDesign:'']].forEach(a=>selected(...a));
     document.querySelectorAll('[data-screen]').forEach(el=>el.hidden=Number(el.dataset.screen)!==state.step);
     document.querySelectorAll('[data-step]').forEach(el=>{const n=Number(el.dataset.step);el.classList.toggle('current',n===state.step);el.classList.toggle('done',n<state.step);if(n===state.step)el.setAttribute('aria-current','step');else el.removeAttribute('aria-current');});
     const fields={'amount':W.formatRub(state.amount).replace(' ₽',''),'message':state.message,'signature':state.signature,'recipient-name':state.recipientName,'recipient-phone':state.recipientPhone,'recipient-email':state.recipientEmail,'send-date':state.sendDate,'send-time':state.sendTime,'buyer-phone':state.buyerPhone};
@@ -55,7 +56,7 @@
     $('back').hidden=state.step===0;$('next').hidden=state.step===5;
     $('next').textContent=state.step===4?'К оплате →':'Далее →';
     const e=W.escapeHtml, cover=W.coverOf(state);
-    $('order-summary').innerHTML=`<p class="eyebrow">Ваш подарок</p><h2>${e(cover.label)}</h2><div class="summary-price">${W.formatRub(state.amount)}</div><dl><dt>Получатель</dt><dd>${e(state.recipientName||'Не указан')}</dd><dt>Доставка</dt><dd>${state.channel==='sms'?'SMS':'PDF на почту'} · ${e((state.channel==='sms'?state.recipientPhone:state.recipientEmail)||'контакт не указан')}</dd><dt>Когда</dt><dd>${state.timing==='now'?'Сразу после оплаты':e(state.sendDate+' · '+state.sendTime+' МСК')}</dd></dl>`;
+    $('order-summary').innerHTML=`<p class="eyebrow">Ваш подарок</p><h2>${e(cover.label)}</h2><p class="hint">Линейка: ${e((W.STYLES[state.style]||{}).label||'')}</p><div class="summary-price">${W.formatRub(state.amount)}</div><dl><dt>Получатель</dt><dd>${e(state.recipientName||'Не указан')}</dd><dt>Доставка</dt><dd>${state.channel==='sms'?'SMS':'PDF на почту'} · ${e((state.channel==='sms'?state.recipientPhone:state.recipientEmail)||'контакт не указан')}</dd><dt>Когда</dt><dd>${state.timing==='now'?'Сразу после оплаты':e(state.sendDate+' · '+state.sendTime+' МСК')}</dd></dl>`;
     document.querySelectorAll('[data-wheel]').forEach(b=>b.setAttribute('aria-selected',Number(b.dataset.wheel)===state.amount?'true':'false'));
     guide(); W.saveState(state);
   }
@@ -82,7 +83,7 @@
   }
   $('next').onclick=()=>move(Math.min(5,state.step+1));$('back').onclick=()=>move(Math.max(0,state.step-1));
   document.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>move(Number(b.dataset.step)));
-  [['cover','cover'],['color','color'],['shape','shape'],['channel','channel'],['timing','timing'],['font','msgFont']].forEach(([attr,key])=>{
+  [['cover','cover'],['style','style'],['color','color'],['shape','shape'],['channel','channel'],['timing','timing'],['font','msgFont']].forEach(([attr,key])=>{
     document.querySelectorAll(`button[data-${attr}]`).forEach(b=>b.onclick=()=>{state[key]=b.getAttribute('data-'+attr);if(attr==='cover'){state.imageData='';generation++;}render();});
   });
   document.querySelectorAll('[data-amount]').forEach(b=>b.onclick=()=>{state.amount=Number(b.dataset.amount);render();wheelToAmount();});

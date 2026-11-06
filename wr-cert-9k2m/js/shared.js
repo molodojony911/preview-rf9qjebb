@@ -1,13 +1,22 @@
 (function (global) {
   const STORAGE_KEY = 'wrCertWidget_v1';
 
+  // Generated occasion covers (not restaurant photos).
   const COVERS = {
-    birthday: { id: 'birthday', label: 'День рождения', src: 'designs/birthday.jpg' },
-    anniversary: { id: 'anniversary', label: 'Годовщина', src: 'designs/anniversary.jpg' },
-    valentine: { id: 'valentine', label: '14 февраля', src: 'designs/valentine.jpg' },
-    winter: { id: 'winter', label: 'Зимний вечер', src: 'designs/winter.jpg' },
-    thanks: { id: 'thanks', label: 'Спасибо', src: 'designs/thanks.jpg' },
-    dome: { id: 'dome', label: 'Под куполом', src: 'designs/dome.jpg' },
+    birthday: { id: 'birthday', label: 'День рождения', src: 'designs/cover-birthday.jpg' },
+    anniversary: { id: 'anniversary', label: 'Годовщина', src: 'designs/cover-anniversary.jpg' },
+    valentine: { id: 'valentine', label: '14 февраля', src: 'designs/cover-valentine.jpg' },
+    winter: { id: 'winter', label: 'Новый год', src: 'designs/cover-winter.jpg' },
+    thanks: { id: 'thanks', label: 'Благодарность', src: 'designs/cover-thanks.jpg' },
+    evening: { id: 'evening', label: 'Просто так', src: 'designs/cover-evening.jpg' },
+  };
+  const LEGACY_COVERS = { dome: 'evening' };
+
+  // Design lines: restyle chrome (type, frame, ornament, seal), never the photo.
+  const STYLES = {
+    minimal: { id: 'minimal', label: 'Минимализм', hint: 'Тихо и сдержанно: воздух, тонкие линии' },
+    classic: { id: 'classic', label: 'Классика', hint: 'Тёмная премиальная карта White Rabbit' },
+    rich: { id: 'rich', label: 'Барокко', hint: 'Золото, орнамент и печать — для особого жеста' },
   };
 
   const SHAPES = {
@@ -39,7 +48,8 @@
     amount: 10000,
     shape: 'classic',
     color: 'ivory-black',
-    cover: 'dome',
+    cover: 'evening',
+    style: 'classic',
     message: '',
     signature: '',
     msgFont: 'serif',
@@ -76,6 +86,9 @@
     state.amount = clampAmount(state.amount || DEFAULTS.amount);
     if (!SHAPES[state.shape]) state.shape = 'classic';
     if (!COLORS[state.color]) state.color = 'ivory-black';
+    if (LEGACY_COVERS[state.cover]) state.cover = LEGACY_COVERS[state.cover];
+    if (!COVERS[state.cover] && state.cover !== 'ai' && state.cover !== 'upload') state.cover = 'evening';
+    if (!STYLES[state.style]) state.style = 'classic';
     state.channel = state.channel === 'sms' ? 'sms' : 'email';
     state.step = Math.min(5, Math.max(0, Number(state.step) || 0));
     state.message = String(state.message || '').slice(0,300);
@@ -126,7 +139,7 @@
     if (state.cover === 'upload' && state.imageData) return {label:'Ваш дизайн',src:state.imageData};
     const samples = {kitten:'котёнок',puppy:'щенок',cake:'торт',flowers:'цветы',sparkling:'игристое',stars:'звёзды'};
     if (state.cover === 'ai' && samples[state.aiDesign]) return {label:'Особенный вечер',src:'designs/ai-'+state.aiDesign+'.jpg'};
-    return COVERS[state.cover] || COVERS.dome;
+    return COVERS[state.cover] || COVERS.evening;
   }
 
   function renderCertHTML(state, opts) {
@@ -143,11 +156,14 @@
       escapeHtml(state.shape) +
       '" data-color="' +
       escapeHtml(state.color) +
+      '" data-style="' +
+      escapeHtml(state.style) +
       '"' +
       (opts.id ? ' id="' + opts.id + '"' : '') +
       '>' +
       '<span class="cert-suit tl" aria-hidden="true">♠</span>' +
       '<span class="cert-suit br" aria-hidden="true">♠</span>' +
+      '<span class="cert-orn" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></span>' +
       '<div class="cert-cover"><img src="' +
       escapeHtml(cover.src) +
       '" alt=""></div>' +
@@ -156,6 +172,7 @@
       escapeHtml(cover.label) +
       '</span></div>' +
       '<div class="cert-mid">' +
+      '<div class="cert-rule" aria-hidden="true"><span>✦</span></div>' +
       '<div class="cert-title">' +
       escapeHtml(v.title) +
       '</div>' +
@@ -170,7 +187,7 @@
       who +
       '</b></span>' +
       (sig ? '<span class="sig-line">от ' + escapeHtml(sig) + '</span>' : '') +
-      '</div><div class="cert-seal" aria-hidden="true">WR</div></div>' +
+      '</div><div class="cert-seal" aria-hidden="true"><span>WR</span></div></div>' +
       '</div></article>'
     );
   }
@@ -240,6 +257,7 @@
     COVERS,
     SHAPES,
     COLORS,
+    STYLES,
     TEMPLATES,
     DEFAULTS,
     clampAmount,
