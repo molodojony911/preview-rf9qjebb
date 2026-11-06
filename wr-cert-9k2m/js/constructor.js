@@ -24,17 +24,9 @@
     });
   }
 
-  function syncExperience() {
-    const current = state.experience ? state.experience : 'none';
-    document.querySelectorAll('[data-exp]').forEach(function (btn) {
-      btn.classList.toggle('is-on', btn.getAttribute('data-exp') === current);
-    });
-  }
-
   function render() {
     els.preview.innerHTML = W.renderCertHTML(state);
     syncChips('[data-amount]', 'data-amount', state.amount);
-    syncExperience();
     syncChips('[data-shape]', 'data-shape', state.shape);
     syncChips('[data-color]', 'data-color', state.color);
     syncChips('[data-cover]', 'data-cover', state.cover);
@@ -88,22 +80,6 @@
       render();
     });
   }
-
-  document.querySelectorAll('[data-exp]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      const id = btn.getAttribute('data-exp');
-      if (id === 'none') {
-        state.experience = '';
-      } else if (state.experience === id) {
-        // Second click on the same experience clears the wish.
-        state.experience = '';
-      } else {
-        state.experience = id;
-        // Amount stays untouched — experience is only a wish.
-      }
-      render();
-    });
-  });
 
   document.querySelectorAll('[data-shape]').forEach(function (btn) {
     btn.addEventListener('click', function () {
