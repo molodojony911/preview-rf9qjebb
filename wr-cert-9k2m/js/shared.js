@@ -1,45 +1,6 @@
 (function (global) {
   const STORAGE_KEY = 'wrCertWidget_v1';
 
-  const EXPERIENCES = {
-    dinner: {
-      id: 'dinner',
-      title: 'Ужин для двоих',
-      desc: 'Два места у панорамы, сезонное меню шефа и вечер, который не спешит.',
-      price: 25000,
-      priceLabel: '25 000 ₽',
-      priceNote: 'ориентир меню · пример для макета',
-      photo: 'assets/hall.webp',
-    },
-    tasting: {
-      id: 'tasting',
-      title: 'Дегустационный сет с винным сопровождением',
-      desc: 'Сет «Золотая осень» Владимира Мухина и вино к каждому блюду.',
-      price: 27300,
-      priceLabel: '27 300 ₽',
-      priceNote: 'ориентир меню · 17 500 + 9 800 ₽',
-      photo: 'assets/g1.webp',
-    },
-    chef: {
-      id: 'chef',
-      title: "Chef's table",
-      desc: 'Стол у кухни, разговор с бригадой и блюда, которых нет в открытом меню.',
-      price: 45000,
-      priceLabel: '45 000 ₽',
-      priceNote: 'ориентир меню · пример для макета',
-      photo: 'assets/chef.webp',
-    },
-    brunch: {
-      id: 'brunch',
-      title: 'Бранч',
-      desc: 'Медленное утро под куполом: лёгкие блюда, игристое и Москва внизу.',
-      price: 12000,
-      priceLabel: '12 000 ₽',
-      priceNote: 'ориентир меню · пример для макета',
-      photo: 'assets/dome.webp',
-    },
-  };
-
   const COVERS = {
     birthday: { id: 'birthday', label: 'День рождения', src: 'assets/hall.webp' },
     anniversary: { id: 'anniversary', label: 'Годовщина', src: 'assets/dome.webp' },
@@ -76,7 +37,6 @@
 
   const DEFAULTS = {
     amount: 10000,
-    experience: '',
     shape: 'classic',
     color: 'ivory-black',
     cover: 'dome',
@@ -104,25 +64,10 @@
 
   function migrateState(raw) {
     const state = Object.assign({}, DEFAULTS, raw || {});
-    // Old two-type model: experience type kept the id as a wish; money type had no wish.
-    if (state.type === 'experience') {
-      if (!state.experience || !EXPERIENCES[state.experience]) {
-        state.experience = 'dinner';
-      }
-      // Never overwrite amount with experience price.
-      state.amount = clampAmount(state.amount || DEFAULTS.amount);
-    } else if (state.type === 'money') {
-      state.experience = '';
-      state.amount = clampAmount(state.amount || DEFAULTS.amount);
-    } else {
-      // New model or unknown: keep amount; treat unknown experience ids as none.
-      state.amount = clampAmount(state.amount || DEFAULTS.amount);
-      if (state.experience && !EXPERIENCES[state.experience]) {
-        state.experience = '';
-      }
-      if (state.experience == null) state.experience = '';
-    }
+    // Certificate is always a sum; older saved states may carry type/experience — drop them.
     delete state.type;
+    delete state.experience;
+    state.amount = clampAmount(state.amount || DEFAULTS.amount);
     return state;
   }
 
@@ -163,11 +108,6 @@
     };
   }
 
-  function wishOf(state) {
-    if (!state || !state.experience) return null;
-    return EXPERIENCES[state.experience] || null;
-  }
-
   function coverOf(state) {
     return COVERS[state.cover] || COVERS.dome;
   }
@@ -176,15 +116,11 @@
     opts = opts || {};
     const v = valueLabel(state);
     const cover = coverOf(state);
-    const wish = wishOf(state);
     const msg = (state.message || '').trim();
     const sig = (state.signature || '').trim();
     const to = (state.recipientName || '').trim();
     const msgClass = state.msgFont === 'sans' ? 'cert-msg is-sans' : 'cert-msg';
     const who = to ? escapeHtml(to) : 'гость White Rabbit';
-    const wishHtml = wish
-      ? '<p class="cert-wish"><span>Хотелось бы</span> ' + escapeHtml(wish.title) + '</p>'
-      : '';
     return (
       '<article class="cert" data-shape="' +
       escapeHtml(state.shape) +
@@ -211,7 +147,6 @@
       '<small>' +
       escapeHtml(v.note) +
       '</small></div>' +
-      wishHtml +
       (msg ? '<p class="' + msgClass + '">' + escapeHtml(msg) + '</p>' : '') +
       '</div>' +
       '<div class="cert-bot"><div class="cert-from">для<span><b>' +
@@ -285,7 +220,6 @@
 
   global.WRCert = {
     STORAGE_KEY,
-    EXPERIENCES,
     COVERS,
     SHAPES,
     COLORS,
@@ -296,7 +230,6 @@
     saveState,
     loadState,
     valueLabel,
-    wishOf,
     coverOf,
     renderCertHTML,
     escapeHtml,

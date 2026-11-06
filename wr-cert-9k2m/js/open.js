@@ -28,8 +28,7 @@
     msgCard.querySelector('[data-sig]').textContent = sig ? sig : 'White Rabbit';
     const code = state.code || 'WR-1842';
     codeEl.textContent = code;
-    const wish = state.experience || 'none';
-    qrMount.innerHTML = W.qrSvg(code + '|' + state.amount + '|' + wish);
+    qrMount.innerHTML = W.qrSvg(code + '|' + state.amount);
   }
 
   paint();
