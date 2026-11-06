@@ -2,12 +2,12 @@
   const STORAGE_KEY = 'wrCertWidget_v1';
 
   const COVERS = {
-    birthday: { id: 'birthday', label: 'День рождения', src: 'assets/hall.webp' },
-    anniversary: { id: 'anniversary', label: 'Годовщина', src: 'assets/dome.webp' },
-    valentine: { id: 'valentine', label: '14 февраля', src: 'assets/night.webp' },
-    winter: { id: 'winter', label: 'Зимний вечер', src: 'assets/hero.webp' },
-    thanks: { id: 'thanks', label: 'Спасибо', src: 'assets/chef.webp' },
-    dome: { id: 'dome', label: 'Под куполом', src: 'assets/g5.webp' },
+    birthday: { id: 'birthday', label: 'День рождения', src: 'designs/birthday.jpg' },
+    anniversary: { id: 'anniversary', label: 'Годовщина', src: 'designs/anniversary.jpg' },
+    valentine: { id: 'valentine', label: '14 февраля', src: 'designs/valentine.jpg' },
+    winter: { id: 'winter', label: 'Зимний вечер', src: 'designs/winter.jpg' },
+    thanks: { id: 'thanks', label: 'Спасибо', src: 'designs/thanks.jpg' },
+    dome: { id: 'dome', label: 'Под куполом', src: 'designs/dome.jpg' },
   };
 
   const SHAPES = {
@@ -46,7 +46,12 @@
     recipientName: '',
     recipientPhone: '',
     recipientEmail: '',
-    channel: 'email',
+    channel: 'sms',
+    imageData: '',
+    aiDesign: '',
+    aiPrompt: '',
+    step: 0,
+    buyerPhone: '',
     timing: 'now',
     sendDate: '',
     sendTime: '19:00',
@@ -63,11 +68,18 @@
   }
 
   function migrateState(raw) {
-    const state = Object.assign({}, DEFAULTS, raw || {});
+    const state = Object.assign({}, DEFAULTS);
+    Object.keys(DEFAULTS).forEach(key => { if (raw && raw[key] !== undefined) state[key] = raw[key]; });
     // Certificate is always a sum; older saved states may carry type/experience — drop them.
     delete state.type;
     delete state.experience;
     state.amount = clampAmount(state.amount || DEFAULTS.amount);
+    if (!SHAPES[state.shape]) state.shape = 'classic';
+    if (!COLORS[state.color]) state.color = 'ivory-black';
+    state.channel = state.channel === 'sms' ? 'sms' : 'email';
+    state.step = Math.min(5, Math.max(0, Number(state.step) || 0));
+    state.message = String(state.message || '').slice(0,300);
+    if (!/^data:image\/(jpeg|png|webp);base64,/.test(state.imageData)) state.imageData = '';
     return state;
   }
 
@@ -77,10 +89,10 @@
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch (_) {}
     try {
-      const compact = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-      if (compact.length < 1800) {
-        location.hash = 'c=' + compact;
-      }
+      // Large uploads stay in sessionStorage; the compact hash never retains a stale design.
+      const portable = Object.assign({}, payload, {imageData: ''});
+      const compact = btoa(unescape(encodeURIComponent(JSON.stringify(portable))));
+      history.replaceState(null, '', '#c=' + compact);
     } catch (_) {}
     return payload;
   }
@@ -97,7 +109,9 @@
     try {
       fromStore = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
     } catch (_) {}
-    return migrateState(Object.assign({}, fromStore || {}, fromHash || {}));
+    const merged = Object.assign({}, fromStore || {}, fromHash || {});
+    if (fromHash && fromHash.cover === 'upload' && fromStore && fromStore.cover === 'upload') merged.imageData = fromStore.imageData;
+    return migrateState(merged);
   }
 
   function valueLabel(state) {
@@ -109,6 +123,9 @@
   }
 
   function coverOf(state) {
+    if (state.cover === 'upload' && state.imageData) return {label:'Ваш дизайн',src:state.imageData};
+    const samples = {kitten:'котёнок',puppy:'щенок',cake:'торт',flowers:'цветы',sparkling:'игристое',stars:'звёзды'};
+    if (state.cover === 'ai' && samples[state.aiDesign]) return {label:'Особенный вечер',src:'designs/ai-'+state.aiDesign+'.jpg'};
     return COVERS[state.cover] || COVERS.dome;
   }
 

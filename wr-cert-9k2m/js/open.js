@@ -15,6 +15,8 @@
     envelope.classList.add('is-open');
     result.classList.add('is-shown');
     envelope.setAttribute('aria-expanded', 'true');
+    envelope.blur();
+    envelope.setAttribute('tabindex','-1');
   }
 
   function paint() {
