@@ -11,9 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/widget.css">
 </head>
-<body>
-  <a class="skip" href="#main">К конструктору</a>
-  <header class="hdr">
+<body>  <header class="hdr">
     <div class="brand">
       <img src="assets/logo.svg" alt="White Rabbit">
       <div class="brand-txt">
@@ -27,27 +25,10 @@
     </div>
   </header>
 
-  <main id="main" class="wrap">
-    <div class="controls">
-      <section class="sec" style="border-top:0;padding-top:0" id="block-design">
-        <p class="eyebrow">Шаг 01</p>
-        <div class="sec-h"><h2>Дизайн</h2><span class="n">01</span></div>
-        <p class="hint" style="margin:-6px 0 18px">Тематическая картинка, цвет и форма — всё сразу видно в живом превью.</p>
-        <div class="sub">
-        <h3 class="sub-h">Тематический фон</h3>
-        <p class="hint cover-hint">Выберите фотографию — она станет фоном сертификата. Название повода тоже появится на карточке. Живое превью обновляется сразу.</p>
-        <div class="cover-grid" role="group" aria-label="Фон сертификата и повод">
-          <button type="button" class="opt cover" data-cover="birthday"><img src="assets/hall.webp" alt=""><span>День рождения</span></button>
-          <button type="button" class="opt cover" data-cover="anniversary"><img src="assets/dome.webp" alt=""><span>Годовщина</span></button>
-          <button type="button" class="opt cover" data-cover="valentine"><img src="assets/night.webp" alt=""><span>14 февраля</span></button>
-          <button type="button" class="opt cover" data-cover="winter"><img src="assets/hero.webp" alt=""><span>Зимний вечер</span></button>
-          <button type="button" class="opt cover" data-cover="thanks"><img src="assets/chef.webp" alt=""><span>Спасибо</span></button>
-          <button type="button" class="opt cover is-on" data-cover="dome"><img src="assets/g5.webp" alt=""><span>Под куполом</span></button>
-        </div>
-        </div>
-        <div class="sub">
-        <h3 class="sub-h">Цвет оформления</h3>
-        <div class="color-grid" role="group" aria-label="Цвет">
+<main id="main" class="wizard"><nav class="step-toolbar" aria-label="Этапы оформления"><button type="button" data-step="0" class="step-link"><span>01</span><b>Дизайн</b><i>✓</i></button><button type="button" data-step="1" class="step-link"><span>02</span><b>Номинал</b><i>✓</i></button><button type="button" data-step="2" class="step-link"><span>03</span><b>Получатель</b><i>✓</i></button><button type="button" data-step="3" class="step-link"><span>04</span><b>Поздравление</b><i>✓</i></button><button type="button" data-step="4" class="step-link"><span>05</span><b>Время отправки</b><i>✓</i></button><button type="button" data-step="5" class="step-link"><span>06</span><b>Оплата</b><i>✓</i></button><p class="toolbar-note">Шесть шагов<br>к особому вечеру</p></nav><div class="screen-column"><section class="wizard-screen" data-screen="0" hidden><p class="eyebrow">Подарок с вашим характером · 01 / 06</p><h1 tabindex="-1">Выберите дизайн карты</h1><p class="intro">Не просто подарок. Приглашение в другой мир.</p><div class="sub"><h2>Коллекция White Rabbit</h2><div class="cover-grid" id="templates"></div><p class="hint">Выбранный дизайн сразу виден на сертификате.</p></div>
+<div class="ai-block"><div class="section-row"><h2>Создать особенный дизайн</h2><span class="badge">ИИ · демо</span></div><div class="tags" id="ai-tags"></div><div class="generate-row"><label class="sr-only" for="ai-prompt">Опишите ваш дизайн</label><input id="ai-prompt" placeholder="Или опишите свою идею…" maxlength="160"><button class="btn" id="generate">Сгенерировать</button></div><p class="hint" id="ai-status" role="status">Демо генерации: подберём готовый авторский образ, без обращения к нейросети.</p></div>
+<div class="upload-row"><div><h2>Ваш дизайн</h2><p class="hint">JPG, PNG или WebP · до 3 МБ</p></div><label class="upload-button" for="upload">↑ Загрузить картинку</label><input class="sr-only" id="upload" type="file" accept="image/jpeg,image/png,image/webp"><p id="upload-status" class="hint" role="status"></p></div>
+<div class="sub"><h2>Фон карточки</h2>        <div class="color-grid" role="group" aria-label="Цвет">
           <button type="button" class="opt is-on" data-color="ivory-black" aria-label="Слоновая кость на чёрном"><i class="swatch" data-c="ivory-black"></i><span>Кость</span></button>
           <button type="button" class="opt" data-color="black-ivory" aria-label="Чёрный на пергаменте"><i class="swatch" data-c="black-ivory"></i><span>Пергамент</span></button>
           <button type="button" class="opt" data-color="midnight" aria-label="Полночь"><i class="swatch" data-c="midnight"></i><span>Полночь</span></button>
@@ -55,116 +36,11 @@
           <button type="button" class="opt" data-color="wine" aria-label="Бордо"><i class="swatch" data-c="wine"></i><span>Бордо</span></button>
           <button type="button" class="opt" data-color="cream" aria-label="Тёплый крем"><i class="swatch" data-c="cream"></i><span>Крем</span></button>
         </div>
-        <p class="hint">Цвет задаёт рамку, текст и печать — фотография остаётся как есть.</p>
-        </div>
-        <div class="sub">
-        <h3 class="sub-h">Форма сертификата</h3>
-        <div class="shape-grid" role="group" aria-label="Форма сертификата">
+<p class="hint">Цвет — это фон карточки, фотография остаётся как есть.</p></div><div class="sub"><h2>Форма карты</h2>        <div class="shape-grid" role="group" aria-label="Форма сертификата">
           <button type="button" class="opt is-on" data-shape="classic" aria-label="Классическая карта"><svg class="shape-ico" viewBox="0 0 48 48" width="40" height="40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="13" width="36" height="22" rx="2.5"/></svg><span>Классика</span></button>
           <button type="button" class="opt" data-shape="menu" aria-label="Вертикальная меню-карта"><svg class="shape-ico" viewBox="0 0 48 48" width="40" height="40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="13" y="6" width="22" height="36" rx="2.5"/><path d="M19 15h10M19 20h10M19 25h6"/></svg><span>Меню</span></button>
           <button type="button" class="opt" data-shape="plate" aria-label="Круглая тарелка"><svg class="shape-ico" viewBox="0 0 48 48" width="40" height="40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="10.5" stroke-width="1"/></svg><span>Тарелка</span></button>
           <button type="button" class="opt" data-shape="envelope" aria-label="Конверт"><svg class="shape-ico" viewBox="0 0 48 48" width="40" height="40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="36" height="24" rx="2"/><path d="M6.8 13.2 24 26l17.2-12.8"/></svg><span>Конверт</span></button>
           <button type="button" class="opt" data-shape="ticket" aria-label="Билет"><svg class="shape-ico" viewBox="0 0 48 48" width="40" height="40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14a1 1 0 0 1 1-1h34a1 1 0 0 1 1 1v6a4 4 0 0 0 0 8v6a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-6a4 4 0 0 0 0-8z"/><path d="M17 15v18" stroke-dasharray="2 2.5" stroke-width="1"/></svg><span>Билет</span></button>
         </div>
-        </div>
-      </section>
-
-      <section class="sec" id="block-money">
-        <p class="eyebrow">Шаг 02</p>
-        <div class="sec-h"><h2>Сумма</h2><span class="n">02</span></div>
-        <div class="amount-row" role="group" aria-label="Быстрый выбор суммы">
-          <button type="button" class="chip" data-amount="5000">5 000</button>
-          <button type="button" class="chip is-on" data-amount="10000">10 000</button>
-          <button type="button" class="chip" data-amount="15000">15 000</button>
-          <button type="button" class="chip" data-amount="25000">25 000</button>
-        </div>
-        <div class="field">
-          <label for="amount">Или укажите свою · от 3 000 до 300 000 ₽</label>
-          <div class="amount-wrap">
-            <input id="amount" inputmode="numeric" autocomplete="off" value="10 000">
-            <span class="cur">₽</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="sec">
-        <p class="eyebrow">Шаг 03</p>
-        <div class="sec-h"><h2>Поздравление</h2><span class="n">03</span></div>
-        <div class="field">
-          <div class="row"><label for="message">Текст открытки</label><span class="counter" id="counter">0 / 300</span></div>
-          <textarea id="message" maxlength="300" placeholder="Несколько строк — как записка на салфетке"></textarea>
-        </div>
-        <p class="eyebrow" style="margin-top:16px">Готовые фразы</p>
-        <div class="tpls" role="group" aria-label="Шаблоны послания">
-          <button type="button" class="tpl" data-tpl="t1">Под куполом, над Москвой</button>
-          <button type="button" class="tpl" data-tpl="t2">Для тех, кто опаздывает</button>
-          <button type="button" class="tpl" data-tpl="t3">С днём рождения</button>
-          <button type="button" class="tpl" data-tpl="t4">Спасибо тебе</button>
-          <button type="button" class="tpl" data-tpl="t5">На годовщину</button>
-        </div>
-        <div class="field" style="margin-top:16px">
-          <label for="signature">От кого</label>
-          <input id="signature" maxlength="60" placeholder="Ваше имя">
-        </div>
-        <div class="font-tog" role="group" aria-label="Шрифт послания">
-          <button type="button" class="is-on" data-font="serif"><span class="f-serif">Антиква</span></button>
-          <button type="button" data-font="sans"><span class="f-sans">Гротеск</span></button>
-        </div>
-      </section>
-
-      <section class="sec">
-        <p class="eyebrow">Шаг 04</p>
-        <div class="sec-h"><h2>Получатель и время отправки</h2><span class="n">04</span></div>
-        <div class="field" style="margin-bottom:12px">
-          <label for="recipient-name">Имя получателя</label>
-          <input id="recipient-name" autocomplete="name" placeholder="Как обратиться в открытке">
-        </div>
-        <div class="field" style="margin-bottom:12px">
-          <label for="recipient-phone">Телефон</label>
-          <input id="recipient-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 …">
-        </div>
-        <div class="field" style="margin-bottom:16px">
-          <label for="recipient-email">Email</label>
-          <input id="recipient-email" type="email" autocomplete="email" placeholder="name@email.com">
-        </div>
-        <p class="eyebrow">Канал</p>
-        <div class="channels" role="group" aria-label="Канал доставки">
-          <button type="button" class="chip" data-channel="sms">SMS</button>
-          <button type="button" class="chip is-on" data-channel="email">Email</button>
-          <button type="button" class="chip" data-channel="messenger">Мессенджер</button>
-          <button type="button" class="chip" data-channel="pdf" id="btn-pdf">Скачать PDF</button>
-        </div>
-        <p class="hint">Мессенджер в макете — ссылка для Telegram / WhatsApp. PDF открывает печать сертификата.</p>
-        <div class="timing" role="group" aria-label="Когда отправить">
-          <button type="button" class="is-on" data-timing="now"><b>Сразу</b><span>После оплаты в следующей версии</span></button>
-          <button type="button" data-timing="later"><b>В выбранный час</b><span>Дата и время по Москве</span></button>
-        </div>
-        <div class="when-fields" id="when-fields" hidden>
-          <div class="field"><label for="send-date">Дата</label><input id="send-date" type="date"></div>
-          <div class="field"><label for="send-time">Время</label><input id="send-time" type="time" value="19:00"></div>
-        </div>
-      </section>
-
-      <div class="cta-block">
-        <button type="button" class="btn" id="btn-open">Посмотреть, как увидит получатель</button>
-        <p class="note">Оплата, оферта и погашение появятся в следующей версии. Сейчас — только внешний вид и сценарий открытия.</p>
-        <p class="note"><em>Срок действия и оферта появятся в следующей версии.</em></p>
-      </div>
-    </div>
-
-    <aside class="preview-col" aria-live="polite">
-      <div class="preview-label desktop-only-label"><span>Живое превью</span><i>меняется сразу</i></div>
-      <div class="mobile-preview preview-label"><span>Превью сертификата</span><i>листайте ниже, чтобы настроить</i></div>
-      <div class="cert-stage" id="cert-preview"></div>
-    </aside>
-  </main>
-
-  <footer class="foot">
-    <div><strong>White Rabbit</strong><br>Смоленская пл., 3, 16 этаж · ежедневно 12:00–00:00</div>
-    <div>Макет конструктора · без оплаты и публикации</div>
-  </footer>
-
-  <script src="js/shared.js"></script>
-  <script src="js/constructor.js"></script>
-</body>
-</html>
+</div></section><section class="wizard-screen" data-screen="1" hidden><p class="eyebrow">Подарок с вашим характером · 02 / 06</p><h1 tabindex="-1">Выберите номинал</h1><p class="intro">Подарите свободу выбрать свой вечер.</p><div class="wheel-shell"><div class="wheel-selection"></div><div id="amount-wheel" class="amount-wheel" role="listbox" aria-label="Номинал сертификата"></div><span class="wheel-currency">₽</span></div><div class="amount-row"><button class="chip" data-amount="5000">5 000</button><button class="chip" data-amount="10000">10 000</button><button class="chip" data-amount="15000">15 000</button><button class="chip" data-amount="25000">25 000</button></div><div class="field"><label for="amount">Своя сумма · 3 000–300 000 ₽</label><input id="amount" inputmode="numeric" value="10 000"></div><div class="menu-guide"><p class="eyebrow">Что можно на эту сумму</p><h2 id="guide-title"></h2><p id="guide-detail"></p><p class="hint">Ориентир меню / пример для макета. Не состав сертификата и не официальное предложение ресторана.</p></div></section><section class="wizard-screen" data-screen="2" hidden><p class="eyebrow">Подарок с вашим характером · 03 / 06</p><h1 tabindex="-1">Кому этот вечер?</h1><p class="intro">Осталось добавить немного личного.</p><div class="field"><label for="recipient-name">Имя получателя</label><input id="recipient-name" maxlength="60" autocomplete="off" placeholder="Как обратиться к гостю"></div><h2 class="spaced">Как вручить подарок</h2><div class="channels"><button class="delivery" data-channel="sms"><b>SMS</b><span>Ссылка на красивую открытку</span></button><button class="delivery" data-channel="email"><b>PDF на почту</b><span>Сертификат в электронном письме</span></button></div><div class="field spaced" id="phone-field"><label for="recipient-phone">Телефон получателя</label><input id="recipient-phone" type="tel" placeholder="+7 …"></div><div class="field spaced" id="email-field"><label for="recipient-email">Почта получателя</label><input id="recipient-email" type="email" placeholder="name@example.com"></div><p class="hint">Это макет: SMS и письма не отправляются. Контакты остаются только в этой сессии браузера.</p></section><section class="wizard-screen" data-screen="3" hidden><p class="eyebrow">Подарок с вашим характером · 04 / 06</p><h1 tabindex="-1">Скажите самое важное</h1><p class="intro">Несколько строк, которые запомнятся.</p><div class="greeting-animation" id="greeting-animation"></div><h2>Для кого эти строки?</h2><div class="tpls" id="greeting-tags"></div><button class="text-generate" id="generate-text">✧ Сгенерировать текст <span>ИИ · демо</span></button><div class="field spaced"><div class="row"><label for="message">Ваше поздравление</label><span class="counter" id="counter"></span></div><textarea id="message" maxlength="300" placeholder="Напишите несколько тёплых строк"></textarea></div><div class="field spaced"><label for="signature">От кого</label><input id="signature" maxlength="60" placeholder="Ваше имя"></div><div class="font-tog"><button data-font="serif" class="f-serif">Антиква</button><button data-font="sans">Гротеск</button></div></section><section class="wizard-screen" data-screen="4" hidden><p class="eyebrow">Подарок с вашим характером · 05 / 06</p><h1 tabindex="-1">Выберите момент</h1><p class="intro">Пусть подарок придёт в нужную минуту.</p><div class="timing"><button data-timing="now"><b>Сейчас</b><span>Сразу после оплаты</span></button><button data-timing="later"><b>В особенный момент</b><span>Выберите дату и время</span></button></div><div id="when-fields" class="when-fields"><div class="field"><label for="send-date">Дата</label><input id="send-date" type="date"></div><div class="field"><label for="send-time">Время</label><input id="send-time" type="time"></div></div><div class="timing-note"><span>◷</span><h2>Вовремя — значит с заботой</h2><p>Время указано по Москве (МСК, UTC+3). В макете отправка не планируется и уведомления не приходят.</p></div></section><section class="wizard-screen" data-screen="5" hidden><p class="eyebrow">Подарок с вашим характером · 06 / 06</p><h1 tabindex="-1">Последний штрих</h1><p class="intro">Ваш подарок почти готов.</p><div class="mock-note"><span>МАКЕТ</span> Оплата будет подключена позже. Деньги не списываются.</div><div id="checkout"><div class="order-summary" id="order-summary"></div><div class="field spaced"><label for="buyer-phone">Ваш телефон</label><input id="buyer-phone" type="tel" placeholder="+7 …"></div><p class="hint">В рабочей версии сюда придёт ссылка на оплату. В демо SMS не отправляется.</p><button class="btn pay-button" id="pay">Оплатить</button><p class="note">Нажатие только показывает готовый подарок — без платежа.</p></div><div id="success" hidden><div class="success-mark">✓</div><h2>Подарок готов</h2><p>Вы собрали свой вечер в White Rabbit.</p><p class="hint">Демонстрация завершена. Оплата и отправка не выполнялись.</p><button class="btn" id="btn-open">Посмотреть как получит получатель</button><button class="btn btn--ghost" id="btn-pdf">Скачать / напечатать PDF</button></div></section><p id="validation" class="validation" role="alert"></p><div class="wizard-nav"><button class="back" id="back">← Назад</button><button class="btn" id="next">Далее →</button></div></div><aside class="preview-col"><div class="preview-label"><span id="preview-title">Ваш сертификат</span><i>Живое превью</i></div><div id="cert-preview" class="cert-stage"></div><p class="preview-caption">Под стеклянным небом.<br>На шестнадцатом этаже. Для вас.</p></aside></main><footer class="foot"><div>White Rabbit · Москва, Смоленская пл., 3</div><div>Макет · без оплаты и отправки</div></footer><script src="js/shared.js"></script><script src="js/constructor.js"></script></body></html>
