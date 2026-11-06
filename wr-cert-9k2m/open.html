@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Вам подарок — White Rabbit</title>
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/widget.css">
+</head>
+<body>
+  <a class="skip" href="#open-main">К подарку</a>
+  <div class="open-page" id="open-main">
+    <div class="open-bg" aria-hidden="true"><img src="assets/night.webp" alt=""></div>
+    <div class="open-inner">
+      <p class="open-kicker">White Rabbit · Смоленская пл., 3</p>
+
+      <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-expanded="false" aria-label="Открыть конверт с сертификатом">
+        <div class="envelope">
+          <div class="envelope-flap" aria-hidden="true"></div>
+          <div class="wax" aria-hidden="true">WR</div>
+        </div>
+        <p class="envelope-hint">Нажмите, чтобы открыть</p>
+      </div>
+
+      <div class="open-result" id="open-result">
+        <div id="open-cert"></div>
+
+        <div class="open-msg-card" id="open-msg">
+          <p class="eyebrow">Для <span data-to>Гость</span></p>
+          <p data-msg></p>
+          <div class="sig">от <b data-sig></b></div>
+        </div>
+
+        <div class="qr-block">
+          <div id="qr" aria-hidden="true"></div>
+          <div>
+            <p class="eyebrow">Код для официанта</p>
+            <div class="code" id="human-code">WR-1842</div>
+            <p>Покажите QR или назовите код при оплате счёта. Остаток и история появятся в следующей версии.</p>
+          </div>
+        </div>
+
+        <div class="open-actions">
+          <div class="row">
+            <button type="button" class="btn" id="btn-book">Забронировать стол</button>
+            <a class="btn btn--ghost" href="index.html">Изменить дизайн</a>
+          </div>
+          <p class="book-note">Кнопка брони визуальная: виджет Remarked в макете не подключён.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/shared.js"></script>
+  <script src="js/open.js"></script>
+</body>
+</html>
